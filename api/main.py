@@ -1,6 +1,6 @@
 import logging
 import re
-from fastapi import FastAPI, HTTPException, Request, responses, templating
+from fastapi import FastAPI, HTTPException, Request, responses, templating # I'm not sure why there is an issue here.
 from model.artist import Artist
 from service.itunes import search_artist
 
