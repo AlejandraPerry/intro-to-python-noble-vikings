@@ -1,8 +1,8 @@
-## Intro to Python Course Project
-# Team: Noble Vikings
-# Team Members: Alejandra Perry, Kevin Restrepo, and Jose Unanue
+# Intro to Python Course Project
+## Team: Noble Vikings
+## Team Members: Alejandra Perry, Kevin Restrepo, and Jose Unanue
 
-# Python Introductory Course: Final Project Base Repository
+## Python Introductory Course: Final Project Base Repository
 
 Welcome to the base repository for the final project of the Python Introductory Course! This repository serves as the foundation for your final project, where you'll apply the knowledge you've gained throughout the course to contribute to and improve an open-source project on GitHub.
 
