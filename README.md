@@ -1,6 +1,11 @@
-# Intro to Python Course Project
 ## Team: Noble Vikings
 ## Team Members: Alejandra Perry, Kevin Restrepo, and Jose Unanue
+
+See attached:
+   "Simple-Instructions" file with simpler instructions for accessing the program.
+   "Name-Plan" files under "api" folder to begin writing out code for ideas. 
+
+Begin documenting 3-4 ideas for how the program can be improved. This should include a name for the feature and a brief description on how it would function. 
 
 
 # Python Introductory Course: Final Project Base Repository
