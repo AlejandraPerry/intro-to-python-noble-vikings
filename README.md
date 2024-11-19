@@ -2,6 +2,9 @@
 ## Team Members: Alejandra Perry, Kevin Restrepo, and Jose Unanue
 
 See attached:
+
+   Link to program on browser: http://127.0.0.1:8000
+
    "Simple-Instructions" file with simpler instructions for accessing the program.
    "Name-Plan" files under "api" folder to begin writing out code for ideas. 
 
