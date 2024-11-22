@@ -7,19 +7,21 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        margin: 0;
+        background-color: #202020;
+        margin: 25px;
         padding: 0;
-        height: 100vh;
+        height: 100%;
         display: flex;
         justify-content: center;
-        align-items: center;
+        text-align: center;
       }
 
       .container {
-        background-color: #ffffff;
+        background-color: #303030;
         padding: 20px;
-        border-radius: 8px;
+        margin: 0 0 0 0;
+        border: solid 3px #1d1d1d;
+        border-radius: 15px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         width: 800px;
         height: 100%;
@@ -28,49 +30,58 @@
       }
 
       .container h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #333333;
+        font-size: 36px;
+        margin-bottom: 25px;
+        color: #cccccc;
       }
 
       .search-box {
-        display: flex;
+        display: inline;
+        text-align: center;
         margin-bottom: 20px;
       }
 
       .search-box input {
-        width: calc(100% - 60px);
-        padding: 10px;
-        border: 1px solid #cccccc;
-        border-radius: 4px 0 0 4px;
+        width: 80%;
+        padding: 15px;
+        background-color: #404040;
+        border: solid 3px #2d2d2d;
+        color: #cccccc;
+        border-radius: 20px;
         outline: none;
+        font-size: 16px;
       }
 
       .search-box button {
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 0 4px 4px 0;
+        margin: 0 0 0 15px;
+        padding: 15px;
+        background-color: #8935b0;
+        color: #cccccc;
+        border: solid 3px #6d2a8c;
+        border-radius: 20px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease;
+        font-size: 16px;
       }
 
       .search-box button:hover {
-        background-color: #0056b3;
+        background-color: #ab57d2;
+        border: solid 2px #7d3aac;
+        color: #eeeeee;
       }
 
       .albums {
         overflow-y: auto;
         flex-grow: 1;
         text-align: left;
-        margin-top: 20px;
+        margin: 15px 15px 0 15px;
       }
 
       .album {
-        background-color: #f9f9f9;
+        background-color: #404040;
         padding: 15px;
-        border-radius: 8px;
+        border: solid 3px #2d2d2d;
+        border-radius: 20px;
         margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
@@ -78,35 +89,41 @@
       .album img {
         width: 60px;
         height: 60px;
-        margin-right: 15px;
-        border-radius: 4px;
+        margin: 15px 15px 0 15px;
+        border-radius: 15px;
         float: left;
       }
 
       .album-info {
-        overflow: hidden;
+        margin: 15px 15px 25px 15px;
       }
 
       .album-info h2 {
         font-size: 18px;
         margin: 0 0 5px 0;
-        color: #333333;
+        color: #cccccc;
       }
 
       .album-info p {
         font-size: 14px;
-        margin: 0 0 10px 0;
+        margin: 0;
         color: #777777;
       }
 
       .disc-section {
-        margin-top: 15px;
+        text-align: left;
       }
 
       .disc-section h3 {
-        margin-bottom: 10px;
+        margin: 50px 15px 10px 15px;
+        padding: 10px;
+        width: 75px;
         font-size: 16px;
-        color: #555555;
+        background-color: #bd52ef;
+        border: solid 3px #9b30ce;
+        border-radius: 15px;
+        color: #dddddd;
+        text-align: center;
       }
 
       .track-list {
@@ -117,17 +134,18 @@
 
       .track {
         display: flex;
+        align-items: center;
         justify-content: space-between;
+        background-color: #8935b0;
         padding: 8px;
-        border-bottom: 1px solid #e0e0e0;
-      }
-
-      .track:last-child {
-        border-bottom: none;
+        margin: 10px;
+        border: solid 3px #6d2a8c;
+        border-radius: 15px;
       }
 
       .track-number {
-        color: #777777;
+        margin-left: 15px;
+        color: #cccccc;
         font-size: 12px;
         width: 25px;
       }
@@ -135,11 +153,12 @@
       .track-name {
         flex-grow: 1;
         padding-left: 10px;
-        color: #333333;
+        color: #dddddd;
       }
 
       .track-time {
-        color: #777777;
+        margin-right: 15px;
+        color: #cccccc;
         font-size: 12px;
       }
 
@@ -152,18 +171,6 @@
         width: 300px; /* Adjust width as needed */
         height: 15px; /* Adjust height as needed */
         margin-left: 5px;
-      }
-
-      .audio-player::-webkit-media-controls {
-        /* WebKit browsers specific styling, not always necessary */
-      }
-
-      .audio-player::-webkit-media-controls-panel {
-        /* WebKit browsers specific styling, not always necessary */
-      }
-
-      .audio-player::-webkit-media-controls-play-button {
-        /* WebKit browsers specific styling, not always necessary */
       }
     </style>
   </head>
@@ -182,74 +189,74 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const artistInput = document.getElementById("artist-name")
-        const searchButton = document.querySelector("button")
+        const artistInput = document.getElementById("artist-name");
+        const searchButton = document.querySelector("button");
 
         searchButton.addEventListener("click", () => {
-          searchAlbums()
-        })
+          searchAlbums();
+        });
 
         artistInput.addEventListener("keydown", (event) => {
           if (event.key === "Enter") {
-            event.preventDefault() // Prevent form submission if inside a form
-            searchAlbums()
+            event.preventDefault(); // Prevent form submission if inside a form
+            searchAlbums();
           }
-        })
+        });
 
-        artistInput.focus()
-      })
+        artistInput.focus();
+      });
 
       async function searchAlbums() {
-        const artistInput = document.getElementById("artist-name")
-        const searchButton = document.querySelector("button")
+        const artistInput = document.getElementById("artist-name");
+        const searchButton = document.querySelector("button");
 
-        const artistName = artistInput?.value.trim()
+        const artistName = artistInput?.value.trim();
         if (!artistName) {
-          alert("Please enter an artist name.")
-          return
+          alert("Please enter an artist name.");
+          return;
         }
 
         try {
-          searchButton.disabled = true
-          artistInput.disabled = true
+          searchButton.disabled = true;
+          artistInput.disabled = true;
           const response = await fetch(
             `/artist/${encodeURIComponent(artistName)}`
-          )
-          const data = await response.json()
+          );
+          const data = await response.json();
           if (response.ok) {
-            displayAlbums(data)
-            artistInput.value = ""
-          }
-          else 
-            alert(data.detail ?? "Oops! Something failed. Please try again.")
+            displayAlbums(data);
+            artistInput.value = "";
+          } else
+            alert(data.detail ?? "Oops! Something failed. Please try again.");
         } catch (error) {
-          console.error("Error:", error)
-          alert("Could not retrieve albums. Please try again later.")
+          console.error("Error:", error);
+          alert("Could not retrieve albums. Please try again later.");
         } finally {
-          searchButton.disabled = false
-          artistInput.disabled = false
-          artistInput.focus()
+          searchButton.disabled = false;
+          artistInput.disabled = false;
+          artistInput.focus();
         }
       }
 
       function displayAlbums(data) {
-        const albumsContainer = document.getElementById("albums")
-        albumsContainer.innerHTML = "" // Clear any existing content
+        const albumsContainer = document.getElementById("albums");
+        albumsContainer.innerHTML = ""; // Clear any existing content
 
         if (data.albums.length === 0) {
-          albumsContainer.innerHTML = "<p>No albums found for this artist.</p>"
-          return
+          albumsContainer.innerHTML = "<p>No albums found for this artist.</p>";
+          return;
         }
 
-        data.albums && data.albums.forEach((album) => {
-          const albumElement = document.createElement("div")
-          albumElement.classList.add("album")
+        data.albums &&
+          data.albums.forEach((album) => {
+            const albumElement = document.createElement("div");
+            albumElement.classList.add("album");
 
-          const discs = groupTracksByDisc(album.tracks)
+            const discs = groupTracksByDisc(album.tracks);
 
-          const discSections = discs
-            .map(
-              (disc) => `
+            const discSections = discs
+              .map(
+                (disc) => `
           <div class="disc-section">
               <h3>Disc ${disc.discNumber}</h3>
               <div class="track-list">
@@ -258,16 +265,22 @@
                       (track) => `
                       <div class="track">
                           <div class="track-number">${track.number}</div>
-                          <div class="track-name">${track.name}</div>
-                          <div class="track-time">${(
+                          <div class="track-name">${track.name.slice(0, 30).trim()}...</div>
+                          <div class="track-time">${Math.floor(
                             track.time_millis / 60000
-                          ).toFixed(2)}
+                          )}m ${(Math.floor(
+                        (track.time_millis / 60000 -
+                          Math.floor(track.time_millis / 60000)) *
+                          60
+                      ))}s
                           </div>
                           <div class="track-preview">
-                              ${track.preview_url ? `
-                              <audio class="audio-player" controls src="${
+                              ${
                                 track.preview_url
-                              }" />` : ""}
+                                  ? `
+                              <audio class="audio-player" controls src="${track.preview_url}" />`
+                                  : ""
+                              }
                           </div>
                       </div>
                   `
@@ -276,10 +289,10 @@
               </div>
           </div>
       `
-            )
-            .join("")
+              )
+              .join("");
 
-          albumElement.innerHTML = `
+            albumElement.innerHTML = `
                 <img src="${album.image_url.replace(
                   "100x100",
                   "600x600"
@@ -287,28 +300,31 @@
                 <div class="album-info">
                     <h2>${album.title}</h2>
                     <p>${data.name}</p>
-                    ${discSections}
                 </div>
-            `
+                <div class="disc-info">
+                  ${discSections}
+                </div>
+            `;
 
-          albumsContainer.appendChild(albumElement)
-        })
+            albumsContainer.appendChild(albumElement);
+          });
       }
 
       function groupTracksByDisc(tracks) {
-        const discs = {}
+        const discs = {};
 
-        tracks && tracks.forEach((track) => {
-          if (!discs[track.disc]) {
-            discs[track.disc] = {
-              discNumber: track.disc,
-              tracks: [],
+        tracks &&
+          tracks.forEach((track) => {
+            if (!discs[track.disc]) {
+              discs[track.disc] = {
+                discNumber: track.disc,
+                tracks: [],
+              };
             }
-          }
-          discs[track.disc].tracks.push(track)
-        })
+            discs[track.disc].tracks.push(track);
+          });
 
-        return Object.values(discs)
+        return Object.values(discs);
       }
     </script>
   </body>
