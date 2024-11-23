@@ -268,11 +268,11 @@
                           <div class="track-name">${track.name.slice(0, 30).trim()}...</div>
                           <div class="track-time">${Math.floor(
                             track.time_millis / 60000
-                          )}m ${(Math.floor(
+                          ).toString().padStart(2,'0')}:${(Math.floor(
                         (track.time_millis / 60000 -
                           Math.floor(track.time_millis / 60000)) *
                           60
-                      ))}s
+                      )).toString().padStart(2,'0')}
                           </div>
                           <div class="track-preview">
                               ${
