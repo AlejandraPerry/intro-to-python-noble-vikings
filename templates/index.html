@@ -29,25 +29,23 @@
         flex-direction: column;
       }
 
-      #favorite-button {
+      .favorite-button {
         background: none;
         border: none;
         cursor: pointer;
-        font-size: 2rem;
+        font-size: 1.5rem;
         color: gray;
         transition: color 0.3s ease;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
       }
 
-      #favorite-button.active {
+      .favorite-button.active {
         color: red;
       }
 
       .heart {
-        font-size: 2rem;
+        font-size: 1.5rem;
       }
+
 
       .container h1 {
         font-size: 36px;
@@ -205,11 +203,6 @@
       <div class="albums" id="albums">
         <!-- Album entries will be inserted here dynamically -->
       </div>
-
-      <!-- Favorite Button --> 
-      <button id="favorite-button" class="favorite"> 
-        <span class="heart">&#9829;</span>
-      </button>
     </div>
 
     <script>
@@ -267,47 +260,51 @@
         this.classList.toggle('active');
         });
 
-      function displayAlbums(data) {
-        const albumsContainer = document.getElementById("albums");
-        albumsContainer.innerHTML = ""; // Clear any existing content
+  function displayAlbums(data) {
+    const albumsContainer = document.getElementById("albums");
+    albumsContainer.innerHTML = ""; // Clear any existing content
 
-        if (data.albums.length === 0) {
-          albumsContainer.innerHTML = "<p>No albums found for this artist.</p>";
-          return;
-        }
+    if (data.albums.length === 0) {
+      albumsContainer.innerHTML = "<p>No albums found for this artist.</p>";
+      return;
+    }
 
-        data.albums &&
-          data.albums.forEach((album) => {
-            const albumElement = document.createElement("div");
-            albumElement.classList.add("album");
+    data.albums &&
+      data.albums.forEach((album) => {
+        const albumElement = document.createElement("div");
+        albumElement.classList.add("album");
 
-            const discs = groupTracksByDisc(album.tracks);
+        const discs = groupTracksByDisc(album.tracks);
 
-            const discSections = discs
-              .map(
-                (disc) => `
-          <div class="disc-section">
-              <h3>Disc ${disc.discNumber}</h3>
-              <div class="track-list">
-                  ${disc.tracks
-                    .map(
+        const discSections = discs
+          .map(
+            (disc) => `
+            <div class="disc-section">
+                <h3>Disc ${disc.discNumber}</h3>
+                <div class="track-list">
+                    ${disc.tracks
+                      .map(
                       (track) => `
                       <div class="track">
                           <div class="track-number">${track.number}</div>
-                          <div class="track-name">${track.name.slice(0, 30).trim()}...</div>
+                          <div class="track-name">
+                            ${track.name.slice(0, 30).trim()}...
+                            <button class="favorite-button" onclick="toggleFavorite(this)">
+                                <span class="heart">&#9829;</span>
+                            </button>
+                          </div>
                           <div class="track-time">${Math.floor(
                             track.time_millis / 60000
                           ).toString().padStart(2,'0')}:${(Math.floor(
-                        (track.time_millis / 60000 -
+                          (track.time_millis / 60000 -
                           Math.floor(track.time_millis / 60000)) *
                           60
-                      )).toString().padStart(2,'0')}
+                          )).toString().padStart(2,'0')}
                           </div>
                           <div class="track-preview">
                               ${
                                 track.preview_url
-                                  ? `
-                              <audio class="audio-player" controls src="${track.preview_url}" />`
+                                  ? `<audio class="audio-player" controls src="${track.preview_url}" />`
                                   : ""
                               }
                           </div>
@@ -318,26 +315,33 @@
               </div>
           </div>
       `
-              )
-              .join("");
+        )
+        .join("");
 
-            albumElement.innerHTML = `
-                <img src="${album.image_url.replace(
-                  "100x100",
-                  "600x600"
-                )}" alt="Album Cover">
-                <div class="album-info">
-                    <h2>${album.title}</h2>
-                    <p>${data.name}</p>
-                </div>
-                <div class="disc-info">
-                  ${discSections}
-                </div>
-            `;
+      albumElement.innerHTML = `
+          <img src="${album.image_url.replace(
+            "100x100",
+            "600x600"
+          )}" alt="Album Cover">
+          <div class="album-info">
+              <h2>${album.title}</h2>
+              <p>${data.name}</p>
+          </div>
+          <div class="disc-info">
+            ${discSections}
+          </div>
+      `;
 
-            albumsContainer.appendChild(albumElement);
-          });
-      }
+      albumsContainer.appendChild(albumElement);
+    });
+}
+
+function toggleFavorite(button) {
+  button.classList.toggle('active');
+}
+
+
+
 
       function groupTracksByDisc(tracks) {
         const discs = {};
