@@ -29,6 +29,26 @@
         flex-direction: column;
       }
 
+      #favorite-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 2rem;
+        color: gray;
+        transition: color 0.3s ease;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      #favorite-button.active {
+        color: red;
+      }
+
+      .heart {
+        font-size: 2rem;
+      }
+
       .container h1 {
         font-size: 36px;
         margin-bottom: 25px;
@@ -185,6 +205,11 @@
       <div class="albums" id="albums">
         <!-- Album entries will be inserted here dynamically -->
       </div>
+
+      <!-- Favorite Button --> 
+      <button id="favorite-button" class="favorite"> 
+        <span class="heart">&#9829;</span>
+      </button>
     </div>
 
     <script>
@@ -237,6 +262,10 @@
           artistInput.focus();
         }
       }
+
+      document.getElementById('favorite-button').addEventListener('click', function() {
+        this.classList.toggle('active');
+        });
 
       function displayAlbums(data) {
         const albumsContainer = document.getElementById("albums");
