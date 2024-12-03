@@ -6,6 +6,7 @@
 4) Set up virtual environemt 
     Use this command first: python -m venv venv (Says it works for mac, but I tried it and it works for windows too)
     Use this command second: pip install -r requirements.txt
+    USe this command also: pip install google-api-python-client
 5) Use this command:  uvicorn api.main:app --reload
 6) Search this up on browser to see project: `http://127.0.0.1:8000 ***
 7) Search this up on browser to see API documentation: http://127.0.0.1:8000/docs
