@@ -46,6 +46,24 @@
         font-size: 1.5rem;
       }
 
+      /* New styles for star rating */
+      .rating {
+        display: inline-flex;
+        margin-left: 10px;
+        gap: 2px;
+      }
+
+      .star {
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: #666;
+        transition: color 0.2s ease;
+      }
+
+      .star.active {
+        color: #ffd700;
+      }
+
 
       .container h1 {
         font-size: 36px;
@@ -255,93 +273,129 @@
           artistInput.focus();
         }
       }
+      function createStarRating() {
+        const ratingContainer = document.createElement('div');
+        ratingContainer.className = 'rating';
+        
+        for (let i = 1; i <= 5; i++) {
+          const star = document.createElement('span');
+          star.className = 'star';
+          star.innerHTML = '★';
+          star.dataset.value = i;
+          star.addEventListener('click', handleStarClick);
+          ratingContainer.appendChild(star);
+        }
+        
+        return ratingContainer;
+      }
 
-      document.getElementById('favorite-button').addEventListener('click', function() {
-        this.classList.toggle('active');
+      function handleStarClick(event) {
+        const clickedValue = parseInt(event.target.dataset.value);
+        const ratingContainer = event.target.parentElement;
+        const stars = ratingContainer.getElementsByClassName('star');
+        
+        Array.from(stars).forEach(star => {
+          const starValue = parseInt(star.dataset.value);
+          if (starValue <= clickedValue) {
+            star.classList.add('active');
+          } else {
+            star.classList.remove('active');
+          }
         });
+      }
 
-  function displayAlbums(data) {
-    const albumsContainer = document.getElementById("albums");
-    albumsContainer.innerHTML = ""; // Clear any existing content
+      function displayAlbums(data) {
+        const albumsContainer = document.getElementById("albums");
+        albumsContainer.innerHTML = "";
 
-    if (data.albums.length === 0) {
-      albumsContainer.innerHTML = "<p>No albums found for this artist.</p>";
-      return;
-    }
+        if (data.albums.length === 0) {
+          albumsContainer.innerHTML = "<p>No albums found for this artist.</p>";
+          return;
+        }
 
-    data.albums &&
-      data.albums.forEach((album) => {
-        const albumElement = document.createElement("div");
-        albumElement.classList.add("album");
+        data.albums &&
+          data.albums.forEach((album) => {
+            const albumElement = document.createElement("div");
+            albumElement.classList.add("album");
 
-        const discs = groupTracksByDisc(album.tracks);
+            const discs = groupTracksByDisc(album.tracks);
 
-        const discSections = discs
-          .map(
-            (disc) => `
-            <div class="disc-section">
-                <h3>Disc ${disc.discNumber}</h3>
-                <div class="track-list">
-                    ${disc.tracks
-                      .map(
-                      (track) => `
-                      <div class="track">
-                          <div class="track-number">${track.number}</div>
-                          <div class="track-name">
-                            ${track.name.slice(0, 30).trim()}...
-                            <button class="favorite-button" onclick="toggleFavorite(this)">
-                                <span class="heart">&#9829;</span>
-                            </button>
+            const discSections = discs
+              .map(
+                (disc) => `
+                <div class="disc-section">
+                    <h3>Disc ${disc.discNumber}</h3>
+                    <div class="track-list">
+                        ${disc.tracks
+                          .map(
+                          (track) => `
+                          <div class="track">
+                              <div class="track-number">${track.number}</div>
+                              <div class="track-name">
+                                ${track.name.slice(0, 30).trim()}...
+                                <button class="favorite-button" onclick="toggleFavorite(this)">
+                                    <span class="heart">&#9829;</span>
+                                </button>
+                                <div class="rating">
+                                  <span class="star" data-value="1">★</span>
+                                  <span class="star" data-value="2">★</span>
+                                  <span class="star" data-value="3">★</span>
+                                  <span class="star" data-value="4">★</span>
+                                  <span class="star" data-value="5">★</span>
+                                </div>
+                              </div>
+                              <div class="track-time">${Math.floor(
+                                track.time_millis / 60000
+                              ).toString().padStart(2,'0')}:${(Math.floor(
+                              (track.time_millis / 60000 -
+                              Math.floor(track.time_millis / 60000)) *
+                              60
+                              )).toString().padStart(2,'0')}
+                              </div>
+                              <div class="track-preview">
+                                  ${
+                                    track.preview_url
+                                      ? `<audio class="audio-player" controls src="${track.preview_url}" />`
+                                      : ""
+                                  }
+                              </div>
                           </div>
-                          <div class="track-time">${Math.floor(
-                            track.time_millis / 60000
-                          ).toString().padStart(2,'0')}:${(Math.floor(
-                          (track.time_millis / 60000 -
-                          Math.floor(track.time_millis / 60000)) *
-                          60
-                          )).toString().padStart(2,'0')}
-                          </div>
-                          <div class="track-preview">
-                              ${
-                                track.preview_url
-                                  ? `<audio class="audio-player" controls src="${track.preview_url}" />`
-                                  : ""
-                              }
-                          </div>
-                      </div>
-                  `
-                    )
-                    .join("")}
+                      `
+                        )
+                        .join("")}
+                  </div>
               </div>
-          </div>
-      `
-        )
-        .join("");
+          `
+            )
+            .join("");
 
-      albumElement.innerHTML = `
-          <img src="${album.image_url.replace(
-            "100x100",
-            "600x600"
-          )}" alt="Album Cover">
-          <div class="album-info">
-              <h2>${album.title}</h2>
-              <p>${data.name}</p>
-          </div>
-          <div class="disc-info">
-            ${discSections}
-          </div>
-      `;
+          albumElement.innerHTML = `
+              <img src="${album.image_url.replace(
+                "100x100",
+                "600x600"
+              )}" alt="Album Cover">
+              <div class="album-info">
+                  <h2>${album.title}</h2>
+                  <p>${data.name}</p>
+              </div>
+              <div class="disc-info">
+                ${discSections}
+              </div>
+          `;
 
-      albumsContainer.appendChild(albumElement);
-    });
-}
+          albumsContainer.appendChild(albumElement);
 
-function toggleFavorite(button) {
-  button.classList.toggle('active');
-}
+          // Add event listeners to all stars after content is added to DOM
+          const stars = albumElement.getElementsByClassName('star');
+          Array.from(stars).forEach(star => {
+            star.addEventListener('click', handleStarClick);
+          });
+        });
+      }
 
-
-
+      function toggleFavorite(button) {
+        button.classList.toggle('active');
+      }
 
       function groupTracksByDisc(tracks) {
         const discs = {};
