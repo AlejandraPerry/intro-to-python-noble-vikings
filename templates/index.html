@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Music Time! :3 </title>
+    <title>Music Catalog</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -44,6 +44,17 @@
         width: 100%;
       }
 
+      /* CSS for enlarging Music Catalog on hover */
+      #catalog-title {
+        transition: font-size 0.3s ease, color 0.3s ease;
+      }
+
+      #catalog-title:hover {
+        font-size: 3rem; /* Enlarge text */
+        color: #ab57d2; /* Optional: change color on hover */
+        cursor: pointer; /* Change cursor to indicate it's clickable */
+      }
+
       .nav h1 {
         margin: 25px auto 25px 15px;
       }
@@ -66,6 +77,7 @@
         background-color: #ab57d2;
         border: solid 2px #7d3aac;
         color: #eeeeee;
+        transform: scale(1.1); /* Enlarge the button */
       }
 
       .favorite-button {
@@ -106,7 +118,7 @@
       .container h1 {
         font-size: 36px;
         margin-bottom: 25px;
-        color: #ccccc3;
+        color: #cccccc;
       }
 
       .lm-container h1 {
@@ -148,13 +160,12 @@
         font-size: 16px;
       }
 
-      /* Hover effect */
       .search-box button:hover {
         background-color: #ab57d2;
         border: solid 2px #7d3aac;
         color: #eeeeee;
-        transform: scale(1.1); /* Slightly enlarge the button */
-        transition: transform 0.3s ease; /* Add smooth transition for scaling */
+        transform: scale(1.1); /* Enlarge the button */
+      }
 
       .albums {
         overflow-y: auto;
@@ -180,13 +191,20 @@
         margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
-
-      .album img {
+      
+/* Image hover effect: Enlarges the album image when hovered */
+.album img {
         width: 60px;
         height: 60px;
         margin: 15px 15px 0 15px;
         border-radius: 15px;
         float: left;
+        transition: transform 0.3s ease; /* Smooth transition */
+      }
+
+      /* Enlarge the image on hover */
+      .album img:hover {
+        transform: scale(1.2); /* Enlarge the image */
       }
 
       .lm-album img {
@@ -195,6 +213,12 @@
         margin: 15px 15px 0 15px;
         border-radius: 15px;
         float: left;
+        transition: transform 0.3s ease; /* Smooth transition */
+      }
+
+       /* Enlarge the image on hover */
+       .lm-album img:hover {
+        transform: scale(1.2); /* Enlarge the image */
       }
 
       .album-info {
@@ -214,7 +238,7 @@
       .album-info p {
         font-size: 14px;
         margin: 0;
-        color: #555555;
+        color: #746779;
       }
 
       .disc-section {
@@ -239,6 +263,7 @@
         margin: 0;
       }
 
+      /* Hover effect on track name and bar */
       .track {
         display: flex;
         align-items: center;
@@ -248,6 +273,12 @@
         margin: 10px;
         border: solid 3px #6d2a8c;
         border-radius: 15px;
+        transition: background-color 0.3s ease; /* Smooth transition */
+      }
+
+      /* Hover effect for track bars and name */
+      .track:hover {
+        background-color: #ab57d2; /* Change background on hover */
       }
 
       .track-number {
@@ -260,12 +291,12 @@
       .track-name {
         flex-grow: 1;
         padding-left: 10px;
-        color: #ffffff;
+        color: #dddddd;
       }
 
       .track-time {
         margin-right: 15px;
-        color: #ffffff;
+        color: #cccccc;
         font-size: 12px;
       }
 
@@ -286,7 +317,10 @@
   </head>
   <body class="body">
     <div class="container">
-
+      <div class="nav">
+        <h1 id="catalog-title">Music Catalog</h1>
+        <a class="theme-switch">Light Theme</a>
+      </div>
       <div class="search-box">
         <input
           type="text"
@@ -302,6 +336,11 @@
     </div>
 
     <script>
+ // JavaScript to refresh page when clicking the title
+      document.getElementById("catalog-title").addEventListener("click", function() {
+        location.reload(); // Refresh the page
+      });
+
       document.addEventListener("DOMContentLoaded", () => {
         const artistInput = document.getElementById("artist-name");
         const searchButton = document.querySelector("button");
