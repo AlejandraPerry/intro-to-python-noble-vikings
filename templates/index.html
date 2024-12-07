@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Music Catalog</title>
+    <title>Music Time! :3 </title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -106,7 +106,7 @@
       .container h1 {
         font-size: 36px;
         margin-bottom: 25px;
-        color: #cccccc;
+        color: #ccccc3;
       }
 
       .lm-container h1 {
@@ -148,11 +148,13 @@
         font-size: 16px;
       }
 
+      /* Hover effect */
       .search-box button:hover {
         background-color: #ab57d2;
         border: solid 2px #7d3aac;
         color: #eeeeee;
-      }
+        transform: scale(1.1); /* Slightly enlarge the button */
+        transition: transform 0.3s ease; /* Add smooth transition for scaling */
 
       .albums {
         overflow-y: auto;
@@ -284,10 +286,7 @@
   </head>
   <body class="body">
     <div class="container">
-      <div class="nav">
-        <h1>Music Catalog</h1>
-        <a class="theme-switch">Light Theme</a>
-      </div>
+
       <div class="search-box">
         <input
           type="text"

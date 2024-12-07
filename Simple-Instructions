@@ -9,6 +9,7 @@
     USe this command also: pip install google-api-python-client
 
 Install This:
+
  pip install fastapi
 pip install "jinja2" "python-multipart"  # Required for template rendering
 
