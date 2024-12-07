@@ -16,6 +16,10 @@
         text-align: center;
       }
 
+      .lm-body {
+        background-color: #ffffff;
+      }
+
       .container {
         background-color: #303030;
         padding: 20px;
@@ -29,12 +33,47 @@
         flex-direction: column;
       }
 
+      .lm-container {
+        background-color: #cfcfcf;
+        border-color: #a2a2a2;
+        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+      }
+
+      .nav {
+        display: flex;
+        width: 100%;
+      }
+
+      .nav h1 {
+        margin: 25px auto 25px 15px;
+      }
+
+      .theme-switch {
+        padding: 15px;
+        margin: auto 10px auto 10px;
+        height: 20px;
+        background-color: #8935b0;
+        color: #cccccc;
+        border: solid 3px #6d2a8c;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        align-items: center;
+      }
+
+      .theme-switch:hover {
+        background-color: #ab57d2;
+        border: solid 2px #7d3aac;
+        color: #eeeeee;
+      }
+
       .favorite-button {
         background: none;
         border: none;
         cursor: pointer;
         font-size: 1.5rem;
-        color: rgb(163, 151, 151);
+        color: #afafaf;
         transition: color 0.3s ease;
       }
 
@@ -56,7 +95,7 @@
       .star {
         cursor: pointer;
         font-size: 1.2rem;
-        color: #afb6df;
+        color: #afafaf;
         transition: color 0.2s ease;
       }
 
@@ -64,11 +103,14 @@
         color: #ffd700;
       }
 
-
       .container h1 {
         font-size: 36px;
         margin-bottom: 25px;
         color: #ccccc3;
+      }
+
+      .lm-container h1 {
+        color: #333333;
       }
 
       .search-box {
@@ -86,6 +128,12 @@
         border-radius: 20px;
         outline: none;
         font-size: 16px;
+      }
+
+      .lm-search-box input {
+        background-color: #bfbfbf;
+        border: solid 3px #a2a2a2;
+        color: #333333;
       }
 
       .search-box button {
@@ -116,17 +164,34 @@
       }
 
       .album {
-        background-color: #ffffff;
+        background-color: #404040;
         padding: 15px;
-        border: solid 3px #ffffff;
+        border: solid 3px #2d2d2d;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .lm-album {
+        background-color: #bfbfbf;
+        padding: 15px;
+        border: solid 3px #a2a2a2;
         border-radius: 20px;
         margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
 
       .album img {
-        width: 20px;
-        height: 20px;
+        width: 60px;
+        height: 60px;
+        margin: 15px 15px 0 15px;
+        border-radius: 15px;
+        float: left;
+      }
+
+      .lm-album img {
+        width: 60px;
+        height: 60px;
         margin: 15px 15px 0 15px;
         border-radius: 15px;
         float: left;
@@ -142,10 +207,14 @@
         color: #cccccc;
       }
 
+      .lm-album h2 {
+        color: #333333;
+      }
+
       .album-info p {
         font-size: 14px;
         margin: 0;
-        color: #ffffff;
+        color: #555555;
       }
 
       .disc-section {
@@ -210,22 +279,20 @@
         height: 15px; /* Adjust height as needed */
         margin-left: 5px;
       }
+      .invisible {
+        display: none;
+      }
     </style>
   </head>
-  <body>
+  <body class="body">
     <div class="container">
-      <h1>┊┊┊▕▔╲▂▂▂╱▔▏┊┊┊
-        ╭━━╮╭┈╮┈╭┈╮╭━━╮┈
-        ╰╰╰┃▏╭╮┈╭╮▕┃╯╯╯
-        ┈┃┈┃▏┈┈▅┈┈▕┃┈┃┈
-        ┈┃┈┃▏┈╰┻╯┈▕┃┈┃┈
-        ┈┃┈╰▅▅▅☼▅▅▅╯┈┃┈
-        ┈╰━━┓┈╭┻╮┈┏━━╯
-        
-                     </h1>
-      <h1>It's Music Time!</h1>
+
       <div class="search-box">
-        <input type="text" id="artist-name" placeholder="Search for Album Name!" />
+        <input
+          type="text"
+          id="artist-name"
+          placeholder="Search for Album Name!"
+        />
         <button>Search</button>
       </div>
 
@@ -285,34 +352,68 @@
         }
       }
       function createStarRating() {
-        const ratingContainer = document.createElement('div');
-        ratingContainer.className = 'rating';
-        
+        const ratingContainer = document.createElement("div");
+        ratingContainer.className = "rating";
+
         for (let i = 1; i <= 5; i++) {
-          const star = document.createElement('span');
-          star.className = 'star';
-          star.innerHTML = '★';
+          const star = document.createElement("span");
+          star.className = "star";
+          star.innerHTML = "★";
           star.dataset.value = i;
-          star.addEventListener('click', handleStarClick);
+          star.addEventListener("click", handleStarClick);
           ratingContainer.appendChild(star);
         }
-        
+
         return ratingContainer;
       }
 
       function handleStarClick(event) {
         const clickedValue = parseInt(event.target.dataset.value);
         const ratingContainer = event.target.parentElement;
-        const stars = ratingContainer.getElementsByClassName('star');
-        
-        Array.from(stars).forEach(star => {
+        const stars = ratingContainer.getElementsByClassName("star");
+
+        Array.from(stars).forEach((star) => {
           const starValue = parseInt(star.dataset.value);
           if (starValue <= clickedValue) {
-            star.classList.add('active');
+            star.classList.add("active");
           } else {
-            star.classList.remove('active');
+            star.classList.remove("active");
           }
         });
+      }
+
+      const switch_button = document.getElementsByClassName("theme-switch")[0];
+      let dark_theme = true;
+
+      switch_button.addEventListener("click", switchTheme);
+
+      function switchTheme(event) {
+        event.preventDefault();
+        dark_theme = !dark_theme;
+
+        const body = document.querySelector(".body");
+        const container = document.querySelector(".container");
+        const searchBox = document.querySelector(".search-box");
+        const albumsContainer = document.getElementById("albums");
+        const albums = albumsContainer.getElementsByClassName("album");
+
+        if (!dark_theme) {
+          body.classList.add("lm-body");
+          container.classList.add("lm-container");
+          searchBox.classList.add("lm-search-box");
+          Array.from(albums).forEach((album) => {
+            album.classList.add("lm-album");
+          });
+          switch_button.innerHTML = "Dark Mode";
+        } else {
+          body.classList.remove("lm-body");
+          container.classList.remove("lm-container");
+          searchBox.classList.remove("lm-search-box");
+          Array.from(albums).forEach((album) => {
+            album.classList.remove("lm-album");
+          });
+          switch_button.innerHTML = "Light Mode";
+        }
       }
 
       function displayAlbums(data) {
@@ -339,11 +440,11 @@
                     <div class="track-list">
                         ${disc.tracks
                           .map(
-                          (track) => `
+                            (track) => `
                           <div class="track">
                               <div class="track-number">${track.number}</div>
                               <div class="track-name">
-                                ${track.name.slice(0, 30).trim()}...
+                                ${track.name.slice(0, 12).trim()}...
                                 <button class="favorite-button" onclick="toggleFavorite(this)">
                                     <span class="heart">&#9829;</span>
                                 </button>
@@ -357,11 +458,15 @@
                               </div>
                               <div class="track-time">${Math.floor(
                                 track.time_millis / 60000
-                              ).toString().padStart(2,'0')}:${(Math.floor(
+                              )
+                                .toString()
+                                .padStart(2, "0")}:${Math.floor(
                               (track.time_millis / 60000 -
-                              Math.floor(track.time_millis / 60000)) *
-                              60
-                              )).toString().padStart(2,'0')}
+                                Math.floor(track.time_millis / 60000)) *
+                                60
+                            )
+                              .toString()
+                              .padStart(2, "0")}
                               </div>
                               <div class="track-preview">
                                   ${
@@ -372,21 +477,26 @@
                               </div>
                           </div>
                       `
-                        )
-                        .join("")}
+                          )
+                          .join("")}
                   </div>
               </div>
           `
-            )
-            .join("");
+              )
+              .join("");
 
-          albumElement.innerHTML = `
+            let albumTitle = album.title;
+            if (albumTitle.length > 20) {
+              albumTitle = albumTitle.slice(0, 20).trim() + "...";
+            }
+
+            albumElement.innerHTML = `
               <img src="${album.image_url.replace(
                 "100x100",
                 "600x600"
               )}" alt="Album Cover">
               <div class="album-info">
-                  <h2>${album.title}</h2>
+                  <h2>${albumTitle}</h2>
                   <p>${data.name}</p>
               </div>
               <div class="disc-info">
@@ -394,18 +504,18 @@
               </div>
           `;
 
-          albumsContainer.appendChild(albumElement);
+            albumsContainer.appendChild(albumElement);
 
-          // Add event listeners to all stars after content is added to DOM
-          const stars = albumElement.getElementsByClassName('star');
-          Array.from(stars).forEach(star => {
-            star.addEventListener('click', handleStarClick);
+            // Add event listeners to all stars after content is added to DOM
+            const stars = albumElement.getElementsByClassName("star");
+            Array.from(stars).forEach((star) => {
+              star.addEventListener("click", handleStarClick);
+            });
           });
-        });
       }
 
       function toggleFavorite(button) {
-        button.classList.toggle('active');
+        button.classList.toggle("active");
       }
 
       function groupTracksByDisc(tracks) {
