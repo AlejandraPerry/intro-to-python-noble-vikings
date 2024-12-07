@@ -14,7 +14,4 @@
   "python.analysis.useLibraryCodeForTypes": true,
   "python.analysis.autoIndent": true,
   "editor.defaultFormatter": "ms-python.autopep8",
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
 }
